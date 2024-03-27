@@ -10,7 +10,7 @@ body {
 #noButton {
     position: absolute;
     margin-left: 150px;
-    transition: 1s;
+    transition: 2.5s;
     /* Smooth movement */
 }
 
