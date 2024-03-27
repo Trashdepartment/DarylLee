@@ -1,0 +1,35 @@
+# This is a basic workflow that is manually triggered
+
+name: Sync Fork with Upstream
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Runs every 5 min
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repo
+      uses: actions/checkout@v3
+      with:
+        ref: main  # Your default branch
+
+    - name: Set up Git
+      run: |
+        git config user.name "Your Name"
+        git config user.email "your-email@example.com"
+
+    - name: Fetch changes from upstream
+      run: |
+        git fetch upstream
+        git checkout main
+        git merge upstream/main
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: main  # Your default branch
